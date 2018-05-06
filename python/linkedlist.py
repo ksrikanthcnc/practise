@@ -1,10 +1,4 @@
-print("Start")
-'''print('hello world')
-
-numbers=[10,20,30]
-for n in numbers:
-	print(n)
-'''
+import sys #for write
 class Node:
 	'struct node'
 	def __init__(self,data):
@@ -17,47 +11,87 @@ class LinkedList:
 	def __init__(self):
 		self.head=None
 		self.tail=None
-		self.size=0
-	def inserthead(self,data):
+	def insertHead(self,data):
 		newNode=Node(data)
-		self.size+=1
 		newNode.nextNode=self.head
-		newNode.nextNode.prevNode=newNode
+		if newNode.nextNode is not None:
+			newNode.nextNode.prevNode=newNode
+		else:
+			self.tail=newNode
 		self.head=newNode
-	def inserttail(self,data):
+	def insertTail(self,data):
 		newNode=Node(data)
-		self.size+=1
 		newNode.prevNode=self.tail
-		self.tail.nextNode=newNode
+		if newNode.prevNode is not None:
+			newNode.prevNode.nextNode=newNode
+		else:
+			self.head=newNode
 		self.tail=newNode
-	def print(self):
+	def printHead(self):
 		tempNode=self.head
 		while tempNode is not None:
-			print(tempNode.data)
+			sys.stdout.write(tempNode.data)
 			tempNode=tempNode.nextNode
+		print("")
+	def printTail(self):
+		tempNode=self.tail
+		while tempNode is not None:
+			sys.stdout.write(tempNode.data)
+			tempNode=tempNode.prevNode
+		print("")
 	def delete(self,data):
 		tempNode=self.head
 		while tempNode.data != data:
 			tempNode=tempNode.nextNode
 		tempNode.prevNode.nextNode=tempNode.nextNode
+		tempNode.nextNode.prevNode=tempNode.prevNode
+	def deleteHead(self):
+		self.head=self.head.nextNode
+		self.head.prevNode=None
+	def deleteTail(self):
+		self.tail=self.tail.prevNode
+		self.tail.nextNode=None
+
 		
-
 list=LinkedList()
-x=-1
-while x != 0:
-	x=int(input("Insert at head"))
-	list.inserthead(x)
-x=-1
-while x != 0:
-	x=int(input("Insert at Tail"))
-	list.inserttail(x)
-list.print()
+print("0:exit")
+print("1.insertHead")
+print("2.insertTail")
+print("3.printHead")
+print("4.printTail")
+print("5.delete")
+print("6.deleteHead")
+print("7.deleteTail")
 
-x=-1
-while x != 0:
-	x=int(input("Delete element:"))
-	list.delete(x)
-list.print()
+while True:
+	x=int(input("Enter Choice:"))
+	if x==0:
+		break
+	elif x==1:
+		list.insertHead(input())
+	elif x==2:
+		list.insertTail(input())
+	elif x==3:
+		list.printHead()
+	elif x==4:
+		list.printTail()
+	elif x==5:
+		list.delete(input())
+	elif x==6:
+		list.deleteHead()
+	elif x==7:
+		list.deleteTail()
+	else:
+		print("0:exit")
+		print("1.insertHead")
+		print("2.insertTail")
+		print("3.printHead")
+		print("4.printTail")
+		print("5.delete")
+		print("6.deleteHead")
+		print("7.deleteTail")
 
 
-print("End")
+
+
+print("Gracefully exited")
